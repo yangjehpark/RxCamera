@@ -13,6 +13,8 @@
 		4FEF1F8C21EC711100B51508 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FEF1F8A21EC711100B51508 /* Main.storyboard */; };
 		4FEF1F8E21EC711300B51508 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FEF1F8D21EC711300B51508 /* Assets.xcassets */; };
 		4FEF1F9121EC711300B51508 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FEF1F8F21EC711300B51508 /* LaunchScreen.storyboard */; };
+		4FEF1F9921EC75AA00B51508 /* RxCameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEF1F9821EC75AA00B51508 /* RxCameraManager.swift */; };
+		4FEF1F9B21EC7A7300B51508 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEF1F9A21EC7A7300B51508 /* CameraManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		4FEF1F8D21EC711300B51508 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FEF1F9021EC711300B51508 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FEF1F9221EC711300B51508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4FEF1F9821EC75AA00B51508 /* RxCameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCameraManager.swift; sourceTree = "<group>"; };
+		4FEF1F9A21EC7A7300B51508 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		57F4A8C2215FDCEB2E4D9D0D /* Pods_RxCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxCamera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3A372869A1F8DBEF72A675E /* Pods-RxCamera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxCamera.release.xcconfig"; path = "Pods/Target Support Files/Pods-RxCamera/Pods-RxCamera.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,6 +67,8 @@
 			children = (
 				4FEF1F8621EC711100B51508 /* AppDelegate.swift */,
 				4FEF1F8821EC711100B51508 /* ViewController.swift */,
+				4FEF1F9A21EC7A7300B51508 /* CameraManager.swift */,
+				4FEF1F9821EC75AA00B51508 /* RxCameraManager.swift */,
 				4FEF1F8A21EC711100B51508 /* Main.storyboard */,
 				4FEF1F8D21EC711300B51508 /* Assets.xcassets */,
 				4FEF1F8F21EC711300B51508 /* LaunchScreen.storyboard */,
@@ -205,6 +211,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FEF1F8921EC711100B51508 /* ViewController.swift in Sources */,
+				4FEF1F9921EC75AA00B51508 /* RxCameraManager.swift in Sources */,
+				4FEF1F9B21EC7A7300B51508 /* CameraManager.swift in Sources */,
 				4FEF1F8721EC711100B51508 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -354,7 +362,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = RxCamera/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = indi.yangjehpark.RxCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -369,7 +380,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = RxCamera/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = indi.yangjehpark.RxCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

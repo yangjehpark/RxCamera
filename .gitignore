@@ -318,3 +318,5 @@ Pods/Target Support Files/RxSwift/RxSwift-prefix.pch
 Pods/Target Support Files/RxSwift/RxSwift-umbrella.h
 Pods/Target Support Files/RxSwift/RxSwift.modulemap
 Pods/Target Support Files/RxSwift/RxSwift.xcconfig
+Breakpoints_v2.xcbkptlist
+UserInterfaceState.xcuserstate
