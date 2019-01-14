@@ -17,103 +17,55 @@ class CameraManager: NSObject {
         case closed, opening, opened, closing
     }
     private(set) var state: CameraState = .closed
-    private var cameraView: UIView!
+    private var cameraView: UIView?
     
     private var captureSession: AVCaptureSession?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var capturePhotoOutput: AVCapturePhotoOutput?
     
     func openCamera(preview: UIView, completionHandler: @escaping (Error?) -> Void) {
-        guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
-            // No video device found
-            completionHandler(nil)
-            return
-        }
         
-        do {
-            let input = try AVCaptureDeviceInput(device: captureDevice)
-            captureSession = AVCaptureSession()
-            captureSession!.addInput(input)
-            
-            capturePhotoOutput = AVCapturePhotoOutput()
-            capturePhotoOutput!.isHighResolutionCaptureEnabled = true
-            
-            captureSession!.addOutput(capturePhotoOutput!)
-            
-            let captureMetadataOutput = AVCaptureMetadataOutput()
-            captureSession!.addOutput(captureMetadataOutput)
-            captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            captureMetadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
-            
-            videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-            videoPreviewLayer!.videoGravity = AVLayerVideoGravity.resizeAspectFill
-            videoPreviewLayer!.frame = cameraView.layer.bounds
-            cameraView.layer.addSublayer(videoPreviewLayer!)
-            
-            captureSession!.startRunning()
-            
-            completionHandler(nil)
-        } catch {
-            completionHandler(error)
-        }
-    }
-    
-    private var session: AVCaptureSession?
-    private var stillImageOutput: AVCapturePhotoOutput?
-    private var captureVideoPreviewLayer: AVCaptureVideoPreviewLayer?
-    
-    func open2Camera(preview: UIView) {
-        session = AVCaptureSession()
-        session!.sessionPreset = AVCaptureSession.Preset.photo
-        if let backCamera = AVCaptureDevice.default(for: .video) {
-            var error: NSError?
-            var input: AVCaptureDeviceInput!
-            do {
-                input = try AVCaptureDeviceInput(device: backCamera)
-            } catch let error1 as NSError {
-                error = error1
-                input = nil
-                print(error!.localizedDescription)
+        askAutorization { (isAutorized) in
+            guard isAutorized else {
+                completionHandler(nil)
+                return
             }
-            if error == nil && session!.canAddInput(input) {
-                session!.addInput(input)
-                stillImageOutput = AVCapturePhotoOutput()
-                //stillImageOutput!.outputSettings = [AVVideoCodecKey:  AVVideoCodecJPEG]
-                if session!.canAddOutput(stillImageOutput!) {
-                    session!.addOutput(stillImageOutput!)
-                    captureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: session!)
-                    captureVideoPreviewLayer!.videoGravity = .resizeAspect
-                    captureVideoPreviewLayer!.connection?.videoOrientation = .portrait
-                    preview.layer.addSublayer(videoPreviewLayer!)
-                    session!.startRunning()
-                } else {
-                    print("no output line founded")
-                }
-            } else {
-                print("no session founded")
-            }
-        } else {
-            print("no back camera founded")
+            
+            print("asdf")
         }
     }
     
     func closeCamera() {
-        
+        cameraView = nil
     }
     
-    func askAutorization() {
-        
+    func askAutorization(completionHandler: @escaping (Bool) -> Void) {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            completionHandler(true)
+        default:
+            let alert = UIAlertController(title: "RxCamera", message: "Do you want?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                } else {
+                    
+                }
+            }))
+            if var topVC = UIApplication.shared.keyWindow?.rootViewController {
+                while let presentedVC = topVC.presentedViewController {
+                    topVC = presentedVC
+                }
+                topVC.present(alert, animated: true, completion: nil)
+            }
+        }
     }
 }
 
 extension CameraManager: AVCapturePhotoCaptureDelegate {
     
-    func photoOutput(_ captureOutput: AVCapturePhotoOutput,
-                     didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?,
-                     previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?,
-                     resolvedSettings: AVCaptureResolvedPhotoSettings,
-                     bracketSettings: AVCaptureBracketedStillImageSettings?,
-                     error: Error?) {
+    func photoOutput(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
         // Make sure we get some photo sample buffer
         guard error == nil,
             let photoSampleBuffer = photoSampleBuffer else {

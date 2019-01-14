@@ -19,10 +19,10 @@ class ViewController: UIViewController {
     }
 
     @IBAction func buttonPressed() {
-//        CameraManager.shared.openCamera(preview: preview) { (error) in
-//            
-//        }
-        CameraManager.shared.open2Camera(preview: preview)
+        CameraManager.shared.openCamera(preview: preview) { (error) in
+            
+        }
+//        CameraManager.shared.open2Camera(preview: preview)
     }
 }
 
